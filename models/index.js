@@ -24,7 +24,8 @@ const db = {}
 db.sequelize = sequelize
 db.Sequelize = Sequelize
 
-db.user = require('./userModel')(sequelize, DataTypes)
+db.User = require('./userModel')(sequelize, DataTypes)
+db.Room = require('./roomModel')(sequelize, DataTypes)
 
 db.sequelize.sync()
 

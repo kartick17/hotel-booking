@@ -3,7 +3,7 @@ const JWT = require('jsonwebtoken')
 const db = require('./../models')
 require('dotenv').config()
 
-const User = db.user
+const User = db.User
 
 const createHashPassword = async (password) => {
   return await bcrypt.hash(password, 10)

@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.BIGINT(20),
         allowNull: false,
       },
+      role: {
+        type: DataTypes.STRING,
+        defaultValue: 'user',
+      },
     },
     { tableName: 'users' }
   )
