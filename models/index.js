@@ -27,6 +27,13 @@ db.Sequelize = Sequelize
 db.User = require('./userModel')(sequelize, DataTypes)
 db.Room = require('./roomModel')(sequelize, DataTypes)
 
-db.sequelize.sync()
+db.User.hasMany(db.Room, {
+  foreignKey: 'owner_id',
+})
+db.Room.belongsTo(db.User, {
+  foreignKey: 'owner_id',
+})
+
+db.sequelize.sync({ force: false })
 
 module.exports = db
