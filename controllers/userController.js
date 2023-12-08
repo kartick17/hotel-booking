@@ -1,15 +1,14 @@
 const bcrypt = require('bcrypt')
 const JWT = require('jsonwebtoken')
-const db = require('./../models')
-require('dotenv').config()
-
-const User = db.User
+const { User } = require('./../models')
+// require('dotenv').config()
 
 const createHashPassword = async (password) => {
   return await bcrypt.hash(password, 10)
 }
 
 const createJWT = (id) => {
+  console.log(process.env.JWT_SECRET)
   return JWT.sign(id, process.env.JWT_SECRET)
 }
 
@@ -20,13 +19,7 @@ const comparePassword = async (password, dbPassword) => {
 exports.signup = async (req, res, next) => {
   const { name, email, password, mobile_no, confirmPassword } = req.body
 
-  if (!name || !email || !password || !mobile_no || !confirmPassword)
-    return res.status(400).json({
-      status: false,
-      message: 'All fields are required!',
-    })
-
-  if (password === confirmPassword)
+  if (!password || password !== confirmPassword)
     return res.status(400).json({
       status: false,
       message: 'Password and confirm password should be same!',
