@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const JWT = require('jsonwebtoken')
 const { User } = require('./../models')
+const catchAsync = require('../utils/catchAsync')
 // require('dotenv').config()
 
 const createHashPassword = async (password) => {
@@ -15,7 +16,7 @@ const comparePassword = async (password, dbPassword) => {
   return await bcrypt.compare(password, dbPassword)
 }
 
-exports.signup = async (req, res, next) => {
+exports.signup = catchAsync(async (req, res, next) => {
   const { password, confirmPassword } = req.body
 
   if (!password || password !== confirmPassword)
@@ -32,9 +33,9 @@ exports.signup = async (req, res, next) => {
     status: true,
     message: user,
   })
-}
+})
 
-exports.login = async (req, res, next) => {
+exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body
 
   if (!email || !password)
@@ -57,11 +58,13 @@ exports.login = async (req, res, next) => {
   const token = createJWT(email)
 
   res.cookie('jwt', token, {
-    expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
   })
 
   res.status(200).json({
     status: true,
-    data: token,
+    data: {
+      token,
+    },
   })
-}
+})

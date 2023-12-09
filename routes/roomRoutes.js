@@ -6,6 +6,11 @@ const router = express.Router()
 
 router.use(authController.isLoggedIn, authController.restrictTo('owner'))
 
+router
+  .route('/:id')
+  .get(roomController.getOneRoom)
+  .patch(roomController.updatedRoom)
+
 router.post(
   '/add-room',
   roomController.upload.single('image'),

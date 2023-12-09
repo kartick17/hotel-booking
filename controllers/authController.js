@@ -3,7 +3,7 @@ const { User } = require('../models')
 
 exports.restrictTo = (...roles) => {
   return (req, res, next) => {
-    console.log(req.user)
+    // console.log(req.user)
     if (!roles.includes(req.user.role))
       return res.status(403).json({
         status: false,
@@ -24,9 +24,12 @@ exports.isLoggedIn = async (req, res, next) => {
     })
 
   const decode = jwt.verify(token, process.env.JWT_SECRET)
+  // console.log(decode.email)
 
   const currentUser = await User.findOne({
-    email: decode.email,
+    where: {
+      email: decode.email,
+    },
     attributes: ['id', 'name', 'email', 'mobile_no', 'role'],
   })
 
