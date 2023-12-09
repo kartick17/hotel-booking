@@ -7,9 +7,8 @@ const createHashPassword = async (password) => {
   return await bcrypt.hash(password, 10)
 }
 
-const createJWT = (id) => {
-  console.log(process.env.JWT_SECRET)
-  return JWT.sign(id, process.env.JWT_SECRET)
+const createJWT = (data) => {
+  return JWT.sign({ email: data }, process.env.JWT_SECRET, { expiresIn: '30d' })
 }
 
 const comparePassword = async (password, dbPassword) => {
@@ -17,7 +16,7 @@ const comparePassword = async (password, dbPassword) => {
 }
 
 exports.signup = async (req, res, next) => {
-  const { name, email, password, mobile_no, confirmPassword } = req.body
+  const { password, confirmPassword } = req.body
 
   if (!password || password !== confirmPassword)
     return res.status(400).json({
@@ -25,14 +24,9 @@ exports.signup = async (req, res, next) => {
       message: 'Password and confirm password should be same!',
     })
 
-  const hashPassword = await createHashPassword(password)
+  req.body.password = await createHashPassword(password)
 
-  const user = await User.create({
-    name,
-    email,
-    password: hashPassword,
-    mobile_no,
-  })
+  const user = await User.create(req.body)
 
   res.status(201).json({
     status: true,
@@ -60,7 +54,7 @@ exports.login = async (req, res, next) => {
       message: 'Invalid email or password!',
     })
 
-  const token = createJWT(user.id)
+  const token = createJWT(email)
 
   res.cookie('jwt', token, {
     expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),

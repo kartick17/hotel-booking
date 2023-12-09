@@ -14,7 +14,7 @@ exports.upload = multer({ storage: storage })
 
 exports.addRoom = async (req, res, next) => {
   req.body.image = req.file.originalname
-  req.body.owner_id = req.params.id
+  req.body.owner_id = req.user.id
 
   const newRoom = await Room.create(req.body)
 
@@ -36,7 +36,7 @@ exports.getAllRooms = async (req, res, next) => {
       },
     ],
     where: {
-      owner_id: req.params.id,
+      owner_id: req.user.id,
     },
   })
 

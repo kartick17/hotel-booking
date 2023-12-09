@@ -1,14 +1,17 @@
 const express = require('express')
 const roomController = require('../controllers/roomController')
+const authController = require('../controllers/authController')
 
 const router = express.Router()
 
+router.use(authController.isLoggedIn, authController.restrictTo('owner'))
+
 router.post(
-  '/add-room/:id',
+  '/add-room',
   roomController.upload.single('image'),
   roomController.addRoom
 )
 
-router.get('/all-rooms/:id', roomController.getAllRooms)
+router.get('/all-rooms', roomController.getAllRooms)
 
 module.exports = router
