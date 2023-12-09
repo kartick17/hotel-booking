@@ -36,9 +36,6 @@ exports.getAllRooms = catchAsync(async (req, res, next) => {
         attributes: ['name', 'email', 'mobile_no'],
       },
     ],
-    where: {
-      owner_id: req.user.id,
-    },
   })
 
   res.status(200).json({
@@ -87,6 +84,50 @@ exports.updatedRoom = catchAsync(async (req, res, next) => {
     status: true,
     data: {
       updatedRoom,
+    },
+  })
+})
+
+exports.removeRoom = catchAsync(async (req, res, next) => {
+  const room = await Room.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+
+  console.log(room)
+
+  if (!room)
+    return res.status(404).json({
+      status: false,
+      message: 'No room found with that id',
+    })
+
+  res.status(204).json({
+    status: true,
+    data: null,
+  })
+})
+
+exports.getRoomsByOwner = catchAsync(async (req, res, next) => {
+  const rooms = await Room.findAll({
+    include: [
+      {
+        model: User,
+        // as: 'userDetails',
+        attributes: ['name', 'email', 'mobile_no'],
+      },
+    ],
+    where: {
+      owner_id: req.user.id,
+    },
+  })
+
+  res.status(200).json({
+    status: true,
+    length: rooms.length,
+    data: {
+      rooms,
     },
   })
 })

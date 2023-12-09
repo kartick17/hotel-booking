@@ -6,11 +6,6 @@ const router = express.Router()
 
 router.use(authController.isLoggedIn, authController.restrictTo('owner'))
 
-router
-  .route('/:id')
-  .get(roomController.getOneRoom)
-  .patch(roomController.updatedRoom)
-
 router.post(
   '/add-room',
   roomController.upload.single('image'),
@@ -18,5 +13,12 @@ router.post(
 )
 
 router.get('/all-rooms', roomController.getAllRooms)
+router.get('/get-owner-rooms', roomController.getRoomsByOwner)
+
+router
+  .route('/:id')
+  .get(roomController.getOneRoom)
+  .patch(roomController.updatedRoom)
+  .delete(roomController.removeRoom)
 
 module.exports = router
