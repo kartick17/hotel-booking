@@ -26,6 +26,7 @@ db.Sequelize = Sequelize
 
 db.User = require('./userModel')(sequelize, DataTypes)
 db.Room = require('./roomModel')(sequelize, DataTypes)
+db.Booking = require('./bookingModel')(sequelize, DataTypes)
 
 db.User.hasMany(db.Room, {
   foreignKey: 'owner_id',

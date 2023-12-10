@@ -1,4 +1,5 @@
 module.exports = (err, req, res, next) => {
+  console.log(err)
   err.status = err.status || false
   err.statusCode = err.statusCode || 500
   err.message = err.message || err
