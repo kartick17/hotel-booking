@@ -13,14 +13,23 @@ module.exports = (sequelize, DataTypes) => {
       category: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isLowercase: true,
+        },
       },
       bed_type: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isLowercase: true,
+        },
       },
       room_type: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isLowercase: true,
+        },
       },
       description: {
         type: DataTypes.TEXT,
@@ -37,6 +46,9 @@ module.exports = (sequelize, DataTypes) => {
       location: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          isLowercase: true,
+        },
       },
       owner_id: {
         type: DataTypes.INTEGER(10),
