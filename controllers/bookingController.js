@@ -36,6 +36,11 @@ exports.myBooking = catchAsync(async (req, res, next) => {
   const userId = req.params.id
 
   const bookedRoom = await Booking.findAll({
+    include: [
+      {
+        model: Room,
+      },
+    ],
     where: {
       user_id: userId,
     },

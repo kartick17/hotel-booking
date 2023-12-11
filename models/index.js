@@ -35,6 +35,12 @@ db.Room.belongsTo(db.User, {
   foreignKey: 'owner_id',
 })
 
+db.Room.hasOne(db.Booking)
+
+db.Booking.belongsTo(db.Room, {
+  foreignKey: 'room_id',
+})
+
 db.sequelize.sync({ force: false })
 
 module.exports = db
