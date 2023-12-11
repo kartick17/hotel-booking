@@ -10,7 +10,7 @@ router.get('/get-owner-rooms/:id', roomController.getRoomsByOwner)
 router.use(authController.isLoggedIn, authController.restrictTo('owner'))
 
 router.post(
-  '/add-room',
+  '/add-room/:id',
   roomController.upload.single('image'),
   roomController.addRoom
 )

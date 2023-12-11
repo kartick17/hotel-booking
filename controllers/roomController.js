@@ -15,7 +15,7 @@ exports.upload = multer({ storage: storage })
 
 exports.addRoom = catchAsync(async (req, res, next) => {
   req.body.image = req.file.originalname
-  req.body.owner_id = req.user.id
+  req.body.owner_id = req.params.id
 
   req.body.category = req.body.category.toLowerCase()
   req.body.bed_type = req.body.bed_type.toLowerCase()
