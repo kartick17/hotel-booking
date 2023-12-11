@@ -123,15 +123,13 @@ exports.getRoomsByOwner = catchAsync(async (req, res, next) => {
       },
     ],
     where: {
-      owner_id: req.user.id,
+      owner_id: req.params.id,
     },
   })
 
   res.status(200).json({
     status: true,
     length: rooms.length,
-    data: {
-      rooms,
-    },
+    rooms,
   })
 })

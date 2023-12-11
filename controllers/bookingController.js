@@ -33,7 +33,7 @@ exports.bookingRoom = catchAsync(async (req, res, next) => {
 })
 
 exports.myBooking = catchAsync(async (req, res, next) => {
-  const userId = req.user.id
+  const userId = req.params.id
 
   const bookedRoom = await Booking.findAll({
     where: {

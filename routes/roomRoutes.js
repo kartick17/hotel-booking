@@ -5,6 +5,7 @@ const authController = require('../controllers/authController')
 const router = express.Router()
 
 router.get('/all-rooms/', roomController.getAllRooms)
+router.get('/get-owner-rooms/:id', roomController.getRoomsByOwner)
 
 router.use(authController.isLoggedIn, authController.restrictTo('owner'))
 
@@ -13,8 +14,6 @@ router.post(
   roomController.upload.single('image'),
   roomController.addRoom
 )
-
-router.get('/get-owner-rooms', roomController.getRoomsByOwner)
 
 router
   .route('/:id')
