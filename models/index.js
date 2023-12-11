@@ -35,7 +35,9 @@ db.Room.belongsTo(db.User, {
   foreignKey: 'owner_id',
 })
 
-db.Room.hasOne(db.Booking)
+db.Room.hasOne(db.Booking,{
+  foreignKey:'room_id',
+})
 
 db.Booking.belongsTo(db.Room, {
   foreignKey: 'room_id',

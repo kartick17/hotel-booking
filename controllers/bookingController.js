@@ -39,6 +39,7 @@ exports.myBooking = catchAsync(async (req, res, next) => {
     include: [
       {
         model: Room,
+        attributes:["hotel_name","bed_type","room_type","category","location","image","id","price","booked"],
       },
     ],
     where: {
