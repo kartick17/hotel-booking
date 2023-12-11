@@ -11,8 +11,8 @@ const app = express();
 
 const corsOptions = {
   origin: [
-    // URL er last e kokhon o '/' debe na
-    "http://localhost:5173",
+    
+    "http://127.0.0.1:5173",
   ],
   credentials: true, // Allow credentials (cookies)
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],

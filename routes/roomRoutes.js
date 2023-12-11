@@ -7,7 +7,7 @@ const router = express.Router()
 router.get('/all-rooms/', roomController.getAllRooms)
 router.get('/get-owner-rooms/:id', roomController.getRoomsByOwner)
 
-router.use(authController.isLoggedIn, authController.restrictTo('owner'))
+// router.use(authController.isLoggedIn, authController.restrictTo('owner'))
 
 router.post(
   '/add-room/:id',

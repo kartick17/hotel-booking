@@ -2,8 +2,8 @@ const { Booking, Room } = require('../models')
 const catchAsync = require('../utils/catchAsync')
 
 exports.bookingRoom = catchAsync(async (req, res, next) => {
-  req.body.user_id = req.user.id
-  req.body.room_id = +req.params.id
+  req.body.user_id = +req.params.userId
+  req.body.room_id = +req.params.roomId
 
   let room = await Room.findByPk(req.body.room_id)
 
